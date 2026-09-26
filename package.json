@@ -1,0 +1,23 @@
+{
+  "name": "@pmd/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "PMD shared platform kit: config, Supabase client (schema per product), social auth, analytics.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --test test/*.test.ts",
+    "verify": "npm run typecheck && npm test"
+  },
+  "peerDependencies": {
+    "@supabase/supabase-js": "^2"
+  },
+  "devDependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "@types/node": "^26.6.3",
+    "typescript": "^5.6.0"
+  }
+}
