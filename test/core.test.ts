@@ -35,7 +35,7 @@ test('social providers registry', () => {
 });
 
 test('client always scopes to the product schema, even if options tries to override it', () => {
-  const config = createPmdConfig({ product: 'shortsoff', supabaseUrl: 'https://x.supabase.co', supabaseAnonKey: 'k' });
+  const config = createPmdConfig({ product: 'shortsoff', supabaseUrl: 'https://x.supabase.co', supabaseAnonKey: 'k', monetization: 'ads' });
   // @ts-expect-error - schema isn't a settable option; this is exactly what the merge guards against
   const client = createPmdClient(config, { db: { schema: 'other_product' }, auth: { persistSession: false } });
   assert.equal((client as unknown as { supabaseUrl: string }).supabaseUrl, 'https://x.supabase.co');
