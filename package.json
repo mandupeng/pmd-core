@@ -13,16 +13,11 @@
     "verify": "npm run typecheck && npm test"
   },
   "peerDependencies": {
-    "@supabase/supabase-js": "^2",
-    "stripe": "^17"
-  },
-  "peerDependenciesMeta": {
-    "stripe": { "optional": true }
+    "@supabase/supabase-js": "^2"
   },
   "devDependencies": {
     "@supabase/supabase-js": "^2.45.0",
     "@types/node": "^26.6.3",
-    "stripe": "^17.4.0",
     "typescript": "^5.6.0"
   }
 }

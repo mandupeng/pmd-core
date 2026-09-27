@@ -8,7 +8,7 @@ PMD 제품 공용 플랫폼 킷. 디자인은 `@pmd/ui`, 나머지(인증·DB·�
 - `createAnalytics(product, [adapter...])` — `track()` 한 번으로 여러 분석 도구에 전송. Vercel: `createAnalytics('x', [track])` (`@vercel/analytics`)
 - `monetization: 'ads' | 'membership'` — `createPmdConfig`의 필수 필드. 제품당 하나만 고름(둘 다 X). 결정 규칙은 `pmd-factory/CLAUDE.md`.
   - `ads`: `createAdSenseConfig(clientId, slots)` — clientId 검증 + 스크립트 URL. 실제 `<AdSlot>` 렌더링은 `@pmd/ui`.
-  - `membership`: `createCheckoutSession` / `createBillingPortalSession` / `verifyWebhookEvent` (Stripe). 티어는 `Tiers` 맵(슬러그→`{label, priceId}`)으로 확장 — 새 티어 추가는 맵 한 줄.
+  - `membership`: `createCheckoutSession` / `createBillingPortalSession` / `verifyWebhookEvent` (Stripe SDK 클라이언트를 구조적 타입으로만 받음 — `stripe` 패키지 설치는 membership 프로젝트에서만 필요). 티어는 `Tiers` 맵(슬러그→`{label, priceId}`)으로 확장 — 새 티어 추가는 맵 한 줄.
 
 설치: `npm install github:mandupeng/pmd-core`. 직접 해야 할 설정은 `BACKLOG.md`.
 개발: `npm run verify`
