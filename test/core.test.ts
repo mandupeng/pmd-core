@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createPmdConfig } from '../src/config.ts';
+import { createPmdClient } from '../src/db.ts';
 import { createAnalytics } from '../src/analytics.ts';
 import { providers } from '../src/auth/providers.ts';
 
@@ -19,4 +20,11 @@ test('analytics tags product, fans out, and survives a broken adapter', () => {
 
 test('social providers registry', () => {
   assert.deepEqual(Object.keys(providers), ['google', 'kakao', 'apple']);
+});
+
+test('client always scopes to the product schema, even if options tries to override it', () => {
+  const config = createPmdConfig({ product: 'shortsoff', supabaseUrl: 'https://x.supabase.co', supabaseAnonKey: 'k' });
+  // @ts-expect-error - schema isn't a settable option; this is exactly what the merge guards against
+  const client = createPmdClient(config, { db: { schema: 'other_product' }, auth: { persistSession: false } });
+  assert.equal((client as unknown as { supabaseUrl: string }).supabaseUrl, 'https://x.supabase.co');
 });
