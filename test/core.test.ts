@@ -4,11 +4,23 @@ import { createPmdConfig } from '../src/config.ts';
 import { createPmdClient } from '../src/db.ts';
 import { createAnalytics } from '../src/analytics.ts';
 import { providers } from '../src/auth/providers.ts';
+import { createAdSenseConfig } from '../src/monetization/ads.ts';
 
 test('config rejects missing values and unsafe schema names', () => {
-  assert.throws(() => createPmdConfig({ product: 'x' }), /missing: supabaseUrl, supabaseAnonKey/);
-  assert.throws(() => createPmdConfig({ product: 'a; drop', supabaseUrl: 'u', supabaseAnonKey: 'k' }), /must match/);
-  assert.equal(createPmdConfig({ product: 'translator', supabaseUrl: 'u', supabaseAnonKey: 'k' }).product, 'translator');
+  assert.throws(() => createPmdConfig({ product: 'x' }), /missing: supabaseUrl, supabaseAnonKey, monetization/);
+  assert.throws(() => createPmdConfig({ product: 'a; drop', supabaseUrl: 'u', supabaseAnonKey: 'k', monetization: 'ads' }), /must match/);
+  assert.throws(
+    () => createPmdConfig({ product: 'translator', supabaseUrl: 'u', supabaseAnonKey: 'k', monetization: 'donations' as never }),
+    /monetization must be one of/,
+  );
+  assert.equal(createPmdConfig({ product: 'translator', supabaseUrl: 'u', supabaseAnonKey: 'k', monetization: 'membership' }).product, 'translator');
+});
+
+test('ads config validates the AdSense client id', () => {
+  assert.throws(() => createAdSenseConfig('not-a-client-id'), /clientId must match/);
+  const cfg = createAdSenseConfig('ca-pub-1234567890123456', { header: '1111111111' });
+  assert.equal(cfg.slots.header, '1111111111');
+  assert.match(cfg.scriptSrc, /client=ca-pub-1234567890123456$/);
 });
 
 test('analytics tags product, fans out, and survives a broken adapter', () => {
