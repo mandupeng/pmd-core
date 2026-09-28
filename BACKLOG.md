@@ -10,6 +10,13 @@
 6. [ ] Kakao Developers 앱 생성 → Supabase Auth > Providers > Kakao — 10분
 7. [ ] Apple 로그인은 Apple Developer 유료 계정 필요 — iOS 출시 시점에 진행
 8. [ ] Vercel 계정을 GitHub(mandupeng)에 연결 — 3분
+9. [ ] **(발견 2026-09-28) Vercel 팀 `pmd14`의 Deployment Protection("Vercel Authentication")을 끄기.**
+   현재 이 팀에서 배포된 제품(dog-name-recommender, sorieum 등)의 배포 URL이 전부
+   `https://vercel.com/login`으로 리다이렉트되어 일반 방문자가 볼 수 없음 — 로그인한
+   Vercel 계정 소유자만 접근 가능한 상태. Vercel 대시보드 → 해당 프로젝트(또는 팀 전체) →
+   Settings → Deployment Protection → "Vercel Authentication" 끄기 (또는 최소한
+   Production 배포에는 비활성화). 이 항목을 끄지 않으면 파이프라인이 "성공"으로 표시한
+   제품도 실제로는 아무도 못 봄 — 5분
 
 ## 수익화 (제품마다 택1 — `monetization` 인테이크 결과 따라)
 
